@@ -47,7 +47,14 @@ module tx_buff (
             tx_buff_busy <= 1'b0;
             tx_buff_1 <= 8'd0;
             tx_buff_2 <= 8'd0;
-            // Continue for tx_buff_3 to tx_buff_10
+            tx_buff_3 <= 8'd0;
+            tx_buff_4 <= 8'd0;
+            tx_buff_5 <= 8'd0;
+            tx_buff_6 <= 8'd0;
+            tx_buff_7 <= 8'd0;
+            tx_buff_8 <= 8'd0;
+            tx_buff_9 <= 8'd0;
+            tx_buff_10 <= 8'd0;
             rtr <= 1'b0;
             dlc <= 4'd0;
         end else begin
