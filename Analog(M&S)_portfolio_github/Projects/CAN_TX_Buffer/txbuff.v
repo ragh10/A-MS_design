@@ -1,4 +1,3 @@
-
 module tx_buff (
     input clk,
     input g_rst,                 // Global reset signal (active low)
@@ -23,15 +22,13 @@ module tx_buff (
 
     // Internal signals
     reg [7:0] tx_data[9:0];       // Transmit buffer data for each buffer
-    reg [1:0] state[9:0];          // State register for FSM for each buffer
-    reg [3:0] buffer_index[9:0];   // Index to current buffer slot for each buffer
-    reg [7:0] data_reg[9:0];       // Register to store incoming data for each buffer
+    reg [1:0] state[9:0];         // State register for FSM for each buffer
+    reg [7:0] data_reg[9:0];      // Register to store incoming data for each buffer
 
     // FSM states
     parameter IDLE = 2'b00;
     parameter BUFFER_LOAD = 2'b01;
     parameter TRANSMIT = 2'b10;
-    
 
     // FSM for each buffer
     integer i;
@@ -39,7 +36,6 @@ module tx_buff (
         if (g_rst) begin
             for (i = 0; i < 10; i = i + 1) begin
                 state[i] <= IDLE;
-                buffer_index[i] <= 0;
                 data_reg[i] <= 8'd0;
                 tx_data[i] <= 8'd0;
             end
@@ -67,20 +63,14 @@ module tx_buff (
                         end
                     end
                     BUFFER_LOAD: begin
-                        if (buffer_index[i] < 10) begin
-                            tx_data[i] <= data_reg[i];
-                            buffer_index[i] <= buffer_index[i] + 1;
-                            frame_gen_intl<=1'b0;
-                        end
-                        if (buffer_index[i] == 10) begin
-                            frame_gen_intl <= 1'b1;
-                            state[i] <= TRANSMIT;
-                        end
+                        tx_data[i] <= data_reg[i];
+                        frame_gen_intl <= 1'b1;
+                        state[i] <= TRANSMIT;
                     end
                     TRANSMIT: begin
                         if (tx_success) begin
                             tx_buff_busy <= 1'b1;
-                            buffer_index[i] <= 0;
+                            frame_gen_intl <= 1'b0;
                             state[i] <= IDLE;
                         end
                     end
@@ -94,22 +84,18 @@ module tx_buff (
     always @* begin
         for (i = 0; i < 10; i = i + 1) begin
             case (i)
-                0: begin tx_buff_1 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                1: begin tx_buff_2 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                2: begin tx_buff_3 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                3: begin tx_buff_4 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                4: begin tx_buff_5 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                5: begin tx_buff_6 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                6: begin tx_buff_7 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                7: begin tx_buff_8 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                8: begin tx_buff_9 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-                9: begin tx_buff_10= tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
-           
-                // Continue for the rest of the buffers
-            
+                0: begin tx_buff_1  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                1: begin tx_buff_2  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                2: begin tx_buff_3  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                3: begin tx_buff_4  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                4: begin tx_buff_5  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                5: begin tx_buff_6  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                6: begin tx_buff_7  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                7: begin tx_buff_8  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                8: begin tx_buff_9  = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
+                9: begin tx_buff_10 = tx_data[i]; rtr = tx_data[i][4]; dlc = tx_data[i][3:0]; end
             endcase
         end
     end
 
 endmodule
-
