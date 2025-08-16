@@ -1,5 +1,5 @@
 # A-MS_design
-Digital electronics:
+#Digital electronics:
 1) ALU
 >Designed ALU in Verilog, completed RTL synthesis, and implemented full-chip layout including floorplanning, and P&R.
 >Implemented power planning, guard rings, and IR drop mitigation; exported final GDSII and verified in Virtuoso.
@@ -9,7 +9,8 @@ Digital electronics:
 3) NOR3
 >Designed schematic and layout level design of 2 and 3 input NOR gate in TSMC 65nm and GPDK045nm using Virtuoso
 >Performed spectre simulation analyzing circuit characterstics, layout verification including DRC, LVS and QRC using Assura and Quantus and Post layout simulation.
-Mixed signal design for high speed circuits:-
+
+#Mixed signal design for high speed circuits:-
 1) CTLE
 >Developed a Continuous-Time Linear Equalizer for SerDes Receiver with a focus on optimizing performance.
 >Designed peaking control using a variable MOS capacitor.
