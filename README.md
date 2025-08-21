@@ -11,7 +11,7 @@ Designed and implemented a Serializer/Deserializer (SerDes) transceiver in 65nm 
 
 Methodology
 
->Designed Serializer (PISO) and Deserializer (SIPO) using optimized flip-flop/MUX-based digital logic.
+>Designed Serializer (PISO) using optimized flip-flop/MUX-based digital logic.
 
 >Developed a CTLE with equalization and impedance matching to compensate for high-frequency channel losses.
 
